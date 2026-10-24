@@ -28,6 +28,11 @@ object BlockedMessagesHelper {
             extraHiddenCache[account] = HashSet(ids)
         }
         InuConfig.prefs.edit { putStringSet(getExtraHiddenKey(account), ids.map(Long::toString).toHashSet()) }
+        notifyChanged(account)
+    }
+
+    @JvmStatic
+    fun notifyChanged(account: Int) {
         NotificationCenter.getInstance(account).postNotificationName(NotificationCenter.blockedUsersDidLoad)
     }
 
